@@ -9,6 +9,9 @@ public class Birb : MonoBehaviour
     public BirbColors birbColor;
     public BirbImage birbImage;
     public List<Birb> parents = new List<Birb>();
+    public BirbStatus status;
+    public BirbStats stats;
+    public Enums.BirbLocation birbLocation;
 
     public bool hatched;
 
@@ -17,11 +20,12 @@ public class Birb : MonoBehaviour
         parents.Add(parent.GetCopy());
     }
 
-    public void CreateBirbFromParents()
+    public void CreateNewBirbFromParents()
     {
         BirbColors tempColors = new BirbColors();
 
         //generate birb from parents if it has any, otherwise use default colours
+        //TODO: make better algorithm here for getting parent traits
         if (parents.Count > 0)
         {
             tempColors.head = parents[Random.Range(0, parents.Count)].birbColor.head;
@@ -31,11 +35,11 @@ public class Birb : MonoBehaviour
         }
         else
         {
-            tempColors = new BirbSpecies().GetSpeciesById(speciesId).GetWeightedDefaultColor();
+            tempColors = GameObject.Find("CrappyDatabas").GetComponent<CrappyDatabase>().GetSpeciesById(speciesId).GetWeightedDefaultColor();
         }
 
         birbColor = tempColors.MutateColors(tempColors);
-        birbImage = new BirbSpecies().GetSpeciesById(speciesId).image;
+        birbImage = GameObject.Find("CrappyDatabas").GetComponent<CrappyDatabase>().GetSpeciesById(speciesId).image;
     }
 
     public Birb GetCopy()

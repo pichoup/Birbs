@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BirbSpecies : System.Object {
+public class BirbSpecies {
     public int id;
     public string speciesName;
     public int rarity;
@@ -16,12 +16,6 @@ public class BirbSpecies : System.Object {
     public float dropCooldown;
     public int seedsToHatch;
 
-
-
-    public BirbSpecies GetSpeciesById(int id)
-    {
-        return this;
-    }
 
     public BirbColors GetWeightedDefaultColor()
     {

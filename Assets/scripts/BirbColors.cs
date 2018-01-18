@@ -29,4 +29,12 @@ public class BirbColors
         float b = Mathf.Clamp01(c.b + Random.Range(-0.2f, 0.2f));
         return new Color(r, g, b);
     }
+
+    public BirbColors()
+    {
+        head = Color.white;
+        body = Color.white;
+        tail = Color.white;
+        wings = Color.white;
+    }
 }
