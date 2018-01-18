@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BirbStats{
-
+    public float growthPercent;
     public float growthRate;
     public float moveSpeed;
     public float sight;

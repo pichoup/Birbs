@@ -87,6 +87,7 @@
     <Compile Include="Assets\scripts\BirbSpecies.cs" />
     <Compile Include="Assets\scripts\BirbStats.cs" />
     <Compile Include="Assets\scripts\BirbStatus.cs" />
+    <Compile Include="Assets\scripts\ButtonLongPress.cs" />
     <Compile Include="Assets\scripts\Enums.cs" />
     <Compile Include="Assets\scripts\GridLayoutFitter.cs" />
     <Compile Include="Assets\scripts\InventoryBirbs.cs" />

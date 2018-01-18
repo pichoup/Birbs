@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Birb : MonoBehaviour
+public class Birb : ButtonLongPress
 {
     public int speciesId;
     public BirbColors birbColor;
@@ -45,5 +45,24 @@ public class Birb : MonoBehaviour
     public Birb GetCopy()
     {
         return (Birb)this.MemberwiseClone();
+    }
+
+
+    public void TickBirb()
+    {
+        stats.growthPercent = Mathf.Clamp(stats.growthPercent + stats.growthRate, 0f, 100f);
+        status.energy = Mathf.Clamp(status.energy + 0.5f, 0f, 100f);
+        status.food = Mathf.Clamp(status.food - 0.5f, 0f, 100f);
+        status.happiness = Mathf.Clamp(status.happiness + ((status.food - 50f) * 0.1f), 0f, 100f);
+    }
+
+    public void TappedBirb()
+    {
+        Debug.Log("<color=blue>TAPPED!</color>");
+    }
+
+    public void LongTappedBirb()
+    {
+        Debug.Log("<color=blue>LONG TAPPED!</color>");
     }
 }

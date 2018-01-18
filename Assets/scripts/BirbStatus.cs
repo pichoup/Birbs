@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BirbStatus {
-    public float growthPercent;
     public float happiness;
-    public float hunger;
+    public float food;
     public float energy;
 
 }

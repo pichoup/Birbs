@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AviaryHandler : MonoBehaviour {
     public PlayerBirbInventory pbi;
+    public float timer;
 
 	// Use this for initialization
 	void Start () {
@@ -12,14 +13,19 @@ public class AviaryHandler : MonoBehaviour {
 
     private void Update()
     {
-        UpdateAllBirbsInInventory();
+        timer += Time.deltaTime;
+        if (timer > 1.0f)
+        {
+            timer = 0f;
+            UpdateAllBirbsInInventory();
+        }
     }
 
     void UpdateAllBirbsInInventory()
     {
         foreach (Birb b in pbi.aviaryBirbs)
         {
-
+            b.TickBirb();
         }
     }
 }
