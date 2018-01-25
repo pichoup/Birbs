@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AviaryHandler : MonoBehaviour {
-    public PlayerBirbInventory pbi;
+    public List<AviaryBirb> aviaryBirbs;
+
+    public PlayerHandler ph;
     public float timer;
+    public float aviaryTickRate = 1f;
 
 	// Use this for initialization
 	void Start () {
-        pbi = GameObject.FindGameObjectWithTag("PlayerBirbInventory").GetComponent<PlayerBirbInventory>();
+        ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
 	}
 
     private void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 1.0f)
+        if (timer > aviaryTickRate)
         {
             timer = 0f;
             UpdateAllBirbsInInventory();
@@ -23,7 +26,7 @@ public class AviaryHandler : MonoBehaviour {
 
     void UpdateAllBirbsInInventory()
     {
-        foreach (Birb b in pbi.aviaryBirbs)
+        foreach (AviaryBirb b in aviaryBirbs)
         {
             b.TickBirb();
         }

@@ -7,7 +7,9 @@ public class Enums  {
     {
         Aviary,
         Feeder,
-        Nest,
+        NestParent,
+        NestParentsEgg,
+        NestEgg,
         Collection
     }        
 }
