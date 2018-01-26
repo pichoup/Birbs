@@ -9,7 +9,7 @@ public class Enums  {
         Feeder,
         NestParent,
         NestParentsEgg,
-        NestEgg,
+        NestHatching,
         Collection
     }        
 }

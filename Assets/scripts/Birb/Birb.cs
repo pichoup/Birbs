@@ -20,32 +20,45 @@ public class Birb : ButtonLongPress
 
     }
 
-    public Birb (Enums.BirbLocation location, Birb parent1 = null, Birb parent2 = null)
+    public Birb (Birb parent1, Birb parent2)
     {
-        if (parent1 != null)
             parents.Add(parent1.GetCopy());
-        if (parent2 != null)
             parents.Add(parent2.GetCopy());
 
-        //BirbColors tempColors = new BirbColors();
+        hatched = false;
 
+        int species = Random.Range(0, parents.Count);
+        speciesId = parents[species].speciesId;
+        birbImage = parents[species].birbImage;
+
+        BirbColors tempColors = new BirbColors();
         //generate birb from parents if it has any, otherwise use defaults
         //TODO: make better algorithm here for getting parent traits
-        if (parents.Count > 0)
-        {
-            //tempColors.head = parents[Random.Range(0, parents.Count)].birbColor.head;
-            //tempColors.body = parents[Random.Range(0, parents.Count)].birbColor.body;
-            //tempColors.tail = parents[Random.Range(0, parents.Count)].birbColor.tail;
-            //tempColors.wings = parents[Random.Range(0, parents.Count)].birbColor.wings;
-        }
-        else
-        {
-            //tempColors = GameObject.Find("CrappyDatabas").GetComponent<CrappyDatabase>().GetSpeciesById(speciesId).GetWeightedDefaultColor();
-        }
+        tempColors.head = parents[Random.Range(0, parents.Count)].birbColor.head;
+        tempColors.body = parents[Random.Range(0, parents.Count)].birbColor.body;
+        tempColors.tail = parents[Random.Range(0, parents.Count)].birbColor.tail;
+        tempColors.wings = parents[Random.Range(0, parents.Count)].birbColor.wings;
 
-        //birbColor = tempColors.MutateColors(tempColors);
+        birbColor = tempColors.MutateColors(tempColors);
+
+        stats.breedTime = parents[Random.Range(0, parents.Count)].stats.breedTime;
+        stats.carryWeight = parents[Random.Range(0, parents.Count)].stats.carryWeight;
+        stats.collectAmount = parents[Random.Range(0, parents.Count)].stats.collectAmount;
+        stats.collectTime = parents[Random.Range(0, parents.Count)].stats.collectTime;
+        stats.growthPercent = 0f;
+        stats.growthRate = parents[Random.Range(0, parents.Count)].stats.growthRate;
+        stats.hatchTime = parents[Random.Range(0, parents.Count)].stats.hatchTime;
+        stats.moveSpeed = parents[Random.Range(0, parents.Count)].stats.moveSpeed;
+        stats.sight = parents[Random.Range(0, parents.Count)].stats.sight;
+
+
+        //else
+        //{
+        //    //tempColors = GameObject.Find("CrappyDatabas").GetComponent<CrappyDatabase>().GetSpeciesById(speciesId).GetWeightedDefaultColor();
+        //}
+
         //birbImage = GameObject.Find("CrappyDatabas").GetComponent<CrappyDatabase>().GetSpeciesById(speciesId).image;
-    }
+    }  
 
     public Birb GetCopy()
     {

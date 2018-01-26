@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BreedingHandler : MonoBehaviour {
-
+    [SerializeField]
     public BreedingBirb[] parents = new BreedingBirb[2];
     public float aviaryTickRate;
+    public bool breeding;
+
     private float timer;
     private float timeSinceBothParentsInBreeder;
 
@@ -14,15 +16,20 @@ public class BreedingHandler : MonoBehaviour {
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > aviaryTickRate)
+        if (breeding)
         {
-            timer = 0f;
-            UpdateBreederBirbs(aviaryTickRate);
+            timer += Time.deltaTime;
+            if (timer > aviaryTickRate)
+            {
+                timer = 0f;
+                UpdateBreederBirbs(aviaryTickRate);
+                UpdateHatchingBirb(aviaryTickRate);
+            }
         }
+        
     }
 
-    public void UpdateBreederBirbs(float time = 0f)
+    private void UpdateBreederBirbs(float time = 0f)
     {
         //if both parents are there, start ticking, or else reset th
         if (parents[0] != null && parents[1] != null)
@@ -32,9 +39,13 @@ public class BreedingHandler : MonoBehaviour {
             {
                 bb.TickBirb();
             }
-            if (parents[0].canMakeEgg && parents[1].canMakeEgg)
+            if (parents[0].canMakeEgg && parents[1].canMakeEgg && egg == null)
             {
-                TryMakeEgg(parents[0].stats.breedTime, parents[1].stats.breedTime);
+                egg = TryMakeEgg(parents[0].stats.breedTime, parents[1].stats.breedTime);
+                if (egg != null)
+                {
+                    breeding = false;
+                }
             }
         }
         else
@@ -44,6 +55,23 @@ public class BreedingHandler : MonoBehaviour {
         if (hatchingBirb != null)
         {
             hatchingBirb.TickBirb();
+        }
+    }
+
+    private void UpdateHatchingBirb(float time = 0f)
+    {
+        if (hatchingBirb != null)
+        {
+            if (!hatchingBirb.hatched)
+            {
+                hatchingBirb.hatchTimer += time;
+                if (hatchingBirb.hatchTimer >= hatchingBirb.stats.hatchTime)
+                {
+                    hatchingBirb.hatched = true;
+                    //TODO: change birb icon here
+                }
+            }
+            
         }
     }
 
@@ -57,6 +85,8 @@ public class BreedingHandler : MonoBehaviour {
         else if (parents[1] == null)
         {
             parents[1] = parent;
+            //both birbs are in, so start breeding
+            breeding = true;
             return true;
         }
         else {
@@ -66,12 +96,13 @@ public class BreedingHandler : MonoBehaviour {
         }
     }
 
-    private void TryMakeEgg(float breedTime1, float breedTime2)
+    private Birb TryMakeEgg(float breedTime1, float breedTime2)
     {
         if (timeSinceBothParentsInBreeder >= (breedTime1 + breedTime2) / 2f)
         {
             //TODO: fancy math here to calculate egg spawn chance
-            egg = new Birb(Enums.BirbLocation.NestParentsEgg, parents[0], parents[1]);
+            return new Birb(parents[0], parents[1]);
         }
+        return null;
     }
 }
