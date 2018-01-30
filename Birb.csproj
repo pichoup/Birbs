@@ -288,6 +288,7 @@
     <Compile Include="Assets\CrappyDatabase.cs" />
     <Compile Include="Assets\scripts\Aviary\AviaryBirb.cs" />
     <Compile Include="Assets\scripts\Aviary\AviaryHandler.cs" />
+    <Compile Include="Assets\scripts\BaseBirbInventoryHandler.cs" />
     <Compile Include="Assets\scripts\Birb\Birb.cs" />
     <Compile Include="Assets\scripts\Birb\BirbColors.cs" />
     <Compile Include="Assets\scripts\Birb\BirbImage.cs" />

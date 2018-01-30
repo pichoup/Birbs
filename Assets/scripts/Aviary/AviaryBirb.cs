@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AviaryBirb : Birb {
+    public AviaryHandler ah;
 
     PlayerHandler ph;
     ModalHandler mh;
@@ -11,8 +12,8 @@ public class AviaryBirb : Birb {
 
     // Use this for initialization
     void Start () {
-        ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
-        mh = GameObject.FindGameObjectWithTag("ModalHandler").GetComponent<ModalHandler>();
+        ah = GameObject.FindGameObjectWithTag("AviaryHandler").GetComponent<AviaryHandler>();
+        collectedItems = new CollectableItem();
 	}
 
     public void TappedBirb()
@@ -52,29 +53,9 @@ public class AviaryBirb : Birb {
 
     private void CheckIfBirbCollectedAnything()
     {
-        bool collectedStuff = false;
-
-        //make collectable items a list or something in the future
-        if (collectedItems.seeds > 0)
-        {
-            ph.collectableItems.seeds += collectedItems.seeds;
-            mh.AddPopupToList("seeds", 0, collectedItems.seeds);
-            collectedItems.seeds = 0;
-            collectedStuff = true;
-        }
-
-        if (collectedItems.worms > 0)
-        {
-            ph.collectableItems.worms += collectedItems.worms;
-            mh.AddPopupToList("worms", 1, collectedItems.worms);
-            collectedItems.worms = 0;
-            collectedStuff = true;
-        }
-
-        if (collectedStuff)
-        {
-            transform.GetChild(0).gameObject.SetActive(false);
-            mh.ShowPopups();
-        }
+        transform.GetChild(0).gameObject.SetActive(false);
+        ah.AddBirbDropsToInventory(collectedItems);
+        collectedItems.seeds = 0;
+        collectedItems.worms = 0;
     }
 }

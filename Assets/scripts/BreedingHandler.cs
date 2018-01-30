@@ -16,17 +16,16 @@ public class BreedingHandler : MonoBehaviour {
 
     private void Update()
     {
-        if (breeding)
+        timer += Time.deltaTime;
+        if (timer > aviaryTickRate)
         {
-            timer += Time.deltaTime;
-            if (timer > aviaryTickRate)
+            timer = 0f;
+            UpdateHatchingBirb(aviaryTickRate);
+            if (breeding)
             {
-                timer = 0f;
                 UpdateBreederBirbs(aviaryTickRate);
-                UpdateHatchingBirb(aviaryTickRate);
             }
-        }
-        
+        }   
     }
 
     private void UpdateBreederBirbs(float time = 0f)
@@ -62,16 +61,7 @@ public class BreedingHandler : MonoBehaviour {
     {
         if (hatchingBirb != null)
         {
-            if (!hatchingBirb.hatched)
-            {
-                hatchingBirb.hatchTimer += time;
-                if (hatchingBirb.hatchTimer >= hatchingBirb.stats.hatchTime)
-                {
-                    hatchingBirb.hatched = true;
-                    //TODO: change birb icon here
-                }
-            }
-            
+            hatchingBirb.TickBirb();
         }
     }
 

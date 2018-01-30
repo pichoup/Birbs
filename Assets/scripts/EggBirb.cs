@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EggBirb : Birb {
 
     public float hatchTimer;
+
+    public Text birbText;
 
     public void TickBirb()
     {
@@ -13,6 +16,19 @@ public class EggBirb : Birb {
         {
             HatchBirb();
         }
+        if (!hatched)
+        {
+            birbText.text = "Time Left: " + (stats.hatchTime - hatchTimer);
+        }
+        else
+        {
+            birbText.text = "Hatched!";
+        }
+    }
+
+    private void Start()
+    {
+        birbText = GameObject.FindGameObjectWithTag("BirbHatchTimer").GetComponent<Text>();
     }
 
     //TODO: Make this work==============================================================================================================================================
