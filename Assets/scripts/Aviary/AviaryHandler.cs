@@ -8,7 +8,8 @@ public class AviaryHandler : BirbHandler<AviaryBirb> {
 
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
+        base.Start();
         mh = GameObject.FindGameObjectWithTag("ModalHandler").GetComponent<ModalHandler>();
     }
 

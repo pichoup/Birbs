@@ -78,16 +78,34 @@ public class Birb : MonoBehaviour
         return (Birb)this.MemberwiseClone();
     }
 
-    public virtual void MoveBirb(Enums.BirbLocation destination)
+    public virtual bool MoveBirb(Enums.BirbLocation destination)
     {
         if (destination == birbLocation)
         {
-            return;
+            return false;
         }
         else
         {
- 
+
+
+            switch (destination)
+            {
+                case Enums.BirbLocation.Aviary:
+                    if (GameObject.FindGameObjectWithTag("AviaryHandler").GetComponent<AviaryHandler>().TryAddBirb(this, Enums.BirbLocation.Aviary))
+                    {
+                        return true;
+                    }
+                    break;
+
+                case Enums.BirbLocation.NestParent:
+                    if (GameObject.FindGameObjectWithTag("BreedingHandler").GetComponent<BreedingHandler>().TryAddBirb(this, Enums.BirbLocation.NestParent))
+                    {
+                        return true;
+                    }
+                    break;
+            }
         }
+        return false;
     }
 
     public virtual void TickBirb(float time = 0f)

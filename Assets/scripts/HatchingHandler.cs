@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class HatchingHandler : BirbHandler<HatchingBirb> {
     public Text birbText;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         birbText = GameObject.FindGameObjectWithTag("BirbHatchTimer").GetComponent<Text>();
     }
 
@@ -15,13 +16,16 @@ public class HatchingHandler : BirbHandler<HatchingBirb> {
     {
         base.UpdateBirbs(birbList, time);
 
-        if (!birbList[0].hatched)
+        if (birbList.Count >= 1)
         {
-            birbText.text = "Time Left: " + (birbList[0].stats.hatchTime - birbList[0].hatchTimer);
-        }
-        else
-        {
-            birbText.text = "Hatched!";
+            if (!birbList[0].hatched)
+            {
+                birbText.text = "Time Left: " + (birbList[0].stats.hatchTime - birbList[0].hatchTimer);
+            }
+            else
+            {
+                birbText.text = "Hatched!";
+            }
         }
     }
 }

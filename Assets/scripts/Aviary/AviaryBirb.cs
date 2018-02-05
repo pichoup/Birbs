@@ -5,7 +5,6 @@ using UnityEngine;
 public class AviaryBirb : Birb {
     public AviaryHandler ah;
 
-    PlayerHandler ph;
     ModalHandler mh;
 
     public CollectableItem collectedItems;
@@ -27,9 +26,15 @@ public class AviaryBirb : Birb {
         MoveBirb(Enums.BirbLocation.NestParent);
     }
 
-    public override void MoveBirb(Enums.BirbLocation location)
+    public override bool MoveBirb(Enums.BirbLocation location)
     {
-
+        if (base.MoveBirb(location))
+        {
+            ah.birbList.Remove(this);
+            Destroy(this.gameObject);
+            return true;
+        }
+        return false;
     }
 
     public override void TickBirb(float time = 0f)

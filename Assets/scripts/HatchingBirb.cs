@@ -7,9 +7,9 @@ public class HatchingBirb : Birb {
 
     public float hatchTimer;
 
-    public void TickBirb()
+    public override void TickBirb(float time = 0f)
     {
-        hatchTimer += 1f;
+        hatchTimer += time;
         if (hatchTimer >= stats.hatchTime)
         {
             HatchBirb();
@@ -17,9 +17,10 @@ public class HatchingBirb : Birb {
     }
 
     //TODO: Make this work==============================================================================================================================================
-    public override void MoveBirb(Enums.BirbLocation location)
+    public override bool MoveBirb(Enums.BirbLocation location)
     {
         base.MoveBirb(location);
+        return false;
     }
 
     private void HatchBirb()

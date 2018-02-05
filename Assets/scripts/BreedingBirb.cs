@@ -18,9 +18,10 @@ public class BreedingBirb : Birb {
     }
 
     //TODO: Make this work==============================================================================================================================================
-    public override void MoveBirb(Enums.BirbLocation location)
+    public override bool MoveBirb(Enums.BirbLocation location)
     {
         base.MoveBirb(location);
+        return false;
     }
 
     public void TappedBirb()

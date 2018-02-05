@@ -13,7 +13,7 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
     public int maxBirbsInThisInventory;
     public int openBirbSlot;
 
-    private void Start()
+    public virtual void Start()
     {
         ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
     }
@@ -39,17 +39,25 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
         }
     }
 
-    public virtual bool TryAddBirb(Birb birb)
+    public virtual bool TryAddBirb(Birb birb, Enums.BirbLocation location)
     {
         openBirbSlot = CheckForOpenBirbSlot();
         if (openBirbSlot >= 0)
         {
+            Enums.BirbLocation initialLocation = location;
+
             GameObject go = Instantiate(birbPrefab, Vector3.zero, Quaternion.identity);
             go.transform.SetParent(birbTransform.GetChild(openBirbSlot));
             go.GetComponent<RectTransform>().offsetMax = Vector2.zero;
             go.GetComponent<RectTransform>().offsetMin = Vector2.zero;
-            birbList[openBirbSlot] = go.GetComponent<T>();
+            birbList.Add(go.GetComponent<T>());
             birbList[openBirbSlot].SetBirbStats(birb);
+            birbList[openBirbSlot].birbLocation = location;
+
+            //I think I need this
+            ph.allPlayerBirbs.Remove(birb);
+            ph.allPlayerBirbs.Add(birbList[openBirbSlot]);
+
             return true;
         }
         return false;
@@ -68,4 +76,24 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
     {
         return birbTransform.childCount;
     }
+
+
+    //public Enums.BirbLocation RemoveBirbFromHandler<T>(T birb, Enums.BirbLocation location) where T : Birb
+    //{
+    //    switch (location)
+    //    {
+    //        case Enums.BirbLocation.Aviary:
+    //            GameObject.FindGameObjectWithTag("AviaryHandler").GetComponent<AviaryHandler>().birbList.Remove(birb);
+    //            return Enums.BirbLocation.Aviary;
+
+    //        case Enums.BirbLocation.NestParent:
+
+    //            return Enums.BirbLocation.NestParent;
+
+    //        default:
+    //            Debug.LogError("Something went wrong");
+    //            return Enums.BirbLocation.Collection;
+    //    }
+    
+    //}
 }

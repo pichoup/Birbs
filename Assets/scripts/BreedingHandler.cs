@@ -5,22 +5,20 @@ using UnityEngine;
 public class BreedingHandler : BirbHandler<BreedingBirb> {
     public bool breeding;
 
-    public Transform parentTransform;
-    public GameObject parentBirbPrefab;
-
     private float timeSinceBothParentsInBreeder;
 
     public Birb egg;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
     }
 
-    public override bool TryAddBirb(Birb birb)
+    public override bool TryAddBirb(Birb birb, Enums.BirbLocation location)
     {
 
-        if (base.TryAddBirb(birb))
+        if (base.TryAddBirb(birb, location))
         {
             if (birbList.Count == maxBirbsInThisInventory)
                 breeding = true;
