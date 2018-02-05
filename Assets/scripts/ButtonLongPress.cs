@@ -9,9 +9,18 @@ public class ButtonLongPress : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private float holdTime = 1f;
     private bool held = false;
 
-    public UnityEvent onClick = new UnityEvent();
+    public UnityEvent onClick;// = new UnityEvent();
 
-    public UnityEvent onLongPress = new UnityEvent();
+    public UnityEvent onLongPress;// = new UnityEvent();
+
+    private void Awake()
+    {
+        if (onClick == null)
+            onClick = new UnityEvent();
+
+        if (onLongPress == null)
+            onLongPress = new UnityEvent();
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {

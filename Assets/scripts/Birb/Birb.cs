@@ -3,28 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Birb : ButtonLongPress
+public class Birb : MonoBehaviour
 {
     public int speciesId;
     public BirbColors birbColor;
     public BirbImage birbImage;
-    public List<Birb> parents = new List<Birb>();
+    public List<Birb> parents;
     public BirbStatus status;
     public BirbStats stats;
     public Enums.BirbLocation birbLocation;
-
     public bool hatched;
+    public ButtonLongPress blp;
 
-    public Birb()
+    private void Awake()
     {
-        
+        blp = GetComponent<ButtonLongPress>();
     }
 
-    public Birb (Birb parent1, Birb parent2)
+    public Birb SetBirbStats(Birb birb)
     {
-            parents.Add(parent1.GetCopy());
-            parents.Add(parent2.GetCopy());
+        speciesId = birb.speciesId;
+        birbColor = birb.birbColor;
+        birbImage = birb.birbImage;
+        parents = birb.parents;
+        status = birb.status;
+        stats = birb.stats;
+        birbLocation = birb.birbLocation;
+        return (Birb)this.MemberwiseClone();
+    }
 
+    public Birb CreateNewBirbFromParents (Birb parent1, Birb parent2)
+    {
+        parents.Add(parent1.GetCopy());
+        parents.Add(parent2.GetCopy());
+        parents = new List<Birb>();
         hatched = false;
 
         int species = Random.Range(0, parents.Count);
@@ -51,6 +63,7 @@ public class Birb : ButtonLongPress
         stats.moveSpeed = parents[Random.Range(0, parents.Count)].stats.moveSpeed;
         stats.sight = parents[Random.Range(0, parents.Count)].stats.sight;
 
+        return (Birb)this.MemberwiseClone();
 
         //else
         //{
@@ -65,15 +78,20 @@ public class Birb : ButtonLongPress
         return (Birb)this.MemberwiseClone();
     }
 
-    public virtual void MoveBirb(Enums.BirbLocation location)
+    public virtual void MoveBirb(Enums.BirbLocation destination)
     {
-        if (location == birbLocation)
+        if (destination == birbLocation)
         {
             return;
         }
         else
         {
-            Debug.LogError("Something probably went wrong");
+ 
         }
+    }
+
+    public virtual void TickBirb(float time = 0f)
+    {
+        Debug.Log("somethign went wrong");
     }
 }

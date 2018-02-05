@@ -23,16 +23,16 @@ public class AviaryBirb : Birb {
 
     public void LongTappedBirb()
     {
-        //open birb modal
+        //TODO: open birb info instead
+        MoveBirb(Enums.BirbLocation.NestParent);
     }
 
-    //TODO: Make this work==============================================================================================================================================
     public override void MoveBirb(Enums.BirbLocation location)
     {
-        base.MoveBirb(location);
+
     }
 
-    public void TickBirb()
+    public override void TickBirb(float time = 0f)
     {
         stats.growthPercent = Mathf.Clamp(stats.growthPercent + stats.growthRate, 0f, 100f);
         status.energy = Mathf.Clamp(status.energy + 0.5f, 0f, 100f);

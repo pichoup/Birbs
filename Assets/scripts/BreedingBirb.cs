@@ -7,8 +7,9 @@ public class BreedingBirb : Birb {
     public float breedTimer;
     public bool canMakeEgg;
 
-    public void TickBirb()
+    public override void TickBirb(float time = 0f)
     {
+        //TODO: MAKE THIS WORK
         breedTimer += 1f;
         if (breedTimer >= stats.breedTime)
         {

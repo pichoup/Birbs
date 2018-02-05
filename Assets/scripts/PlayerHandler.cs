@@ -7,6 +7,8 @@ public class PlayerHandler : MonoBehaviour {
 
     public CollectableItem collectableItems;
 
+    public float defaultTickRate;
+
     private void Start()
     {
         allPlayerBirbs = new List<Birb>();
