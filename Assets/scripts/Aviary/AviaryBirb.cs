@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AviaryBirb : Birb {
     public AviaryHandler ah;
+    public GameObject itemNotification;
 
     ModalHandler mh;
 
@@ -52,13 +53,13 @@ public class AviaryBirb : Birb {
             collectedItems.seeds += stats.collectAmount.seeds;
             collectedItems.worms += stats.collectAmount.worms;
             status.timesForagedItems += 1;
-            transform.GetChild(0).gameObject.SetActive(true);
+            itemNotification.SetActive(true);
         }
     }
 
     private void CheckIfBirbCollectedAnything()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
+        itemNotification.SetActive(false);
         ah.AddBirbDropsToInventory(collectedItems);
         collectedItems.seeds = 0;
         collectedItems.worms = 0;

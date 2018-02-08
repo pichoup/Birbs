@@ -7,13 +7,15 @@ public class Birb : MonoBehaviour
 {
     public int speciesId;
     public BirbColors birbColor;
-    public BirbImage birbImage;
+    public BirbSprite birbSprite;
     public List<Birb> parents;
     public BirbStatus status;
     public BirbStats stats;
     public Enums.BirbLocation birbLocation;
     public bool hatched;
     public ButtonLongPress blp;
+
+    public BirbImage birbImage;
 
     private void Awake()
     {
@@ -24,11 +26,14 @@ public class Birb : MonoBehaviour
     {
         speciesId = birb.speciesId;
         birbColor = birb.birbColor;
-        birbImage = birb.birbImage;
+        birbSprite = birb.birbSprite;
         parents = birb.parents;
         status = birb.status;
         stats = birb.stats;
         birbLocation = birb.birbLocation;
+
+        SetBirbSpritesAndColours();
+
         return (Birb)this.MemberwiseClone();
     }
 
@@ -41,7 +46,7 @@ public class Birb : MonoBehaviour
 
         int species = Random.Range(0, parents.Count);
         speciesId = parents[species].speciesId;
-        birbImage = parents[species].birbImage;
+        birbSprite = parents[species].birbSprite;
 
         BirbColors tempColors = new BirbColors();
         //generate birb from parents if it has any, otherwise use defaults
@@ -111,5 +116,19 @@ public class Birb : MonoBehaviour
     public virtual void TickBirb(float time = 0f)
     {
         Debug.Log("somethign went wrong");
+    }
+
+    public void SetBirbSpritesAndColours()
+    {
+        birbImage.head.sprite = birbSprite.head;
+        birbImage.body.sprite = birbSprite.body;
+        birbImage.tail.sprite = birbSprite.tail;
+        birbImage.wings.sprite = birbSprite.wings;
+        birbImage.outline.sprite = birbSprite.outline;
+
+        birbImage.head.color = birbColor.head;
+        birbImage.body.color = birbColor.body;
+        birbImage.tail.color = birbColor.tail;
+        birbImage.wings.color = birbColor.wings;
     }
 }

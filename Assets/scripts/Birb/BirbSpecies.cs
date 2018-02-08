@@ -7,7 +7,7 @@ public class BirbSpecies {
     public int id;
     public string speciesName;
     public int rarity;
-    public BirbImage image;
+    public BirbSprite sprite;
     public List<BirbColors> defaultColors;
 
 

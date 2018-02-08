@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BreedingHandler : BirbHandler<BreedingBirb> {
-    public bool breeding;
-
+    private bool breeding;
     private float timeSinceBothParentsInBreeder;
 
     public Birb egg;
@@ -12,7 +11,6 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
     public override void Start()
     {
         base.Start();
-        ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
     }
 
     public override bool TryAddBirb(Birb birb, Enums.BirbLocation location)
@@ -20,20 +18,18 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
 
         if (base.TryAddBirb(birb, location))
         {
-            if (birbList.Count == maxBirbsInThisInventory)
-                breeding = true;
-
+            ResetBreeding();
             return true;
         }
         return false;
     }
 
+    //birbs try to breed until an egg is made
     public override void UpdateBirbs(List<BreedingBirb> birbList, float time = 0f)
     {
-        //FIX THIS
-        //if both parents are there, start ticking, or else reset
-        if (birbList.Count == 2)
+        if (breeding)
         {
+            base.UpdateBirbs(birbList, time);
             timeSinceBothParentsInBreeder += time;
 
             bool canMakeEgg = egg == null ? true : false;
@@ -54,21 +50,27 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
                 }
             }
         }
-        else
-        {
-            timeSinceBothParentsInBreeder = 0f;
-        }
     }
 
     private Birb TryMakeEgg(float breedTime1, float breedTime2)
     {
         if (timeSinceBothParentsInBreeder >= (breedTime1 + breedTime2) / 2f)
         {
-            //TODO: fancy math here to calculate egg spawn chance
+            //TODO: MAKE THIS WORK
             Birb birb = new Birb();
             return birb.CreateNewBirbFromParents(birbList[0], birbList[1]);
                 //new Birb(parents[0], parents[1]);
         }
         return null;
+    }
+
+    public void ResetBreeding(bool breed = true)
+    {
+        //if both parents are full, start breeding and reset the breed timer
+        if (birbList.Count == maxBirbsInThisInventory)
+        {
+            breeding = breed;
+            timeSinceBothParentsInBreeder = 0f;
+        }
     }
 }

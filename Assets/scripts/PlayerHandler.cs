@@ -11,7 +11,7 @@ public class PlayerHandler : MonoBehaviour {
 
     private void Start()
     {
-        allPlayerBirbs = new List<Birb>();
+        //allPlayerBirbs = new List<Birb>();
         collectableItems = new CollectableItem();
     }
 

@@ -6,7 +6,6 @@ using UnityEngine;
 public class AviaryHandler : BirbHandler<AviaryBirb> {
     public ModalHandler mh;
 
-
 	// Use this for initialization
 	public override void Start () {
         base.Start();
