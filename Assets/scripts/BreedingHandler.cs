@@ -6,6 +6,9 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
     private bool breeding;
     private float timeSinceBothParentsInBreeder;
 
+    public Transform childBirbTransform;
+    public GameObject childBirbPrefab;
+
     public Birb egg;
 
     public override void Start()
@@ -56,10 +59,13 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
     {
         if (timeSinceBothParentsInBreeder >= (breedTime1 + breedTime2) / 2f)
         {
-            //TODO: MAKE THIS WORK
-            Birb birb = new Birb();
-            return birb.CreateNewBirbFromParents(birbList[0], birbList[1]);
-                //new Birb(parents[0], parents[1]);
+            GameObject go = Instantiate(childBirbPrefab, Vector3.zero, Quaternion.identity);
+            go.transform.SetParent(childBirbTransform);
+            go.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+            go.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+            Birb birb = go.GetComponent<Birb>().CreateNewBirbFromParents(birbList[0], birbList[1]);
+            ph.allPlayerBirbs.Add(birb);
+            return birb;
         }
         return null;
     }

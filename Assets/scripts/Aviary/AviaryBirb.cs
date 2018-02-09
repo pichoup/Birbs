@@ -16,12 +16,12 @@ public class AviaryBirb : Birb {
         collectedItems = new CollectableItem();
 	}
 
-    public void TappedBirb()
+    public override void TappedBirb()
     {
         CheckIfBirbCollectedAnything();
     }
 
-    public void LongTappedBirb()
+    public override void LongTappedBirb()
     {
         //TODO: open birb info instead
         MoveBirb(Enums.BirbLocation.NestParent);

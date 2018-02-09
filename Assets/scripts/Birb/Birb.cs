@@ -39,9 +39,9 @@ public class Birb : MonoBehaviour
 
     public Birb CreateNewBirbFromParents (Birb parent1, Birb parent2)
     {
+        parents = new List<Birb>();
         parents.Add(parent1.GetCopy());
         parents.Add(parent2.GetCopy());
-        parents = new List<Birb>();
         hatched = false;
 
         int species = Random.Range(0, parents.Count);
@@ -91,8 +91,6 @@ public class Birb : MonoBehaviour
         }
         else
         {
-
-
             switch (destination)
             {
                 case Enums.BirbLocation.Aviary:
@@ -130,5 +128,15 @@ public class Birb : MonoBehaviour
         birbImage.body.color = birbColor.body;
         birbImage.tail.color = birbColor.tail;
         birbImage.wings.color = birbColor.wings;
+    }
+
+    public virtual void TappedBirb()
+    {
+        //TODO: change this to collection once thats made
+        MoveBirb(Enums.BirbLocation.Aviary);
+    }
+
+    public virtual void LongTappedBirb()
+    {
     }
 }

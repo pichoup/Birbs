@@ -300,9 +300,11 @@
     <Compile Include="Assets\scripts\BreedingBirb.cs" />
     <Compile Include="Assets\scripts\BreedingHandler.cs" />
     <Compile Include="Assets\scripts\ButtonLongPress.cs" />
+    <Compile Include="Assets\scripts\ChildEggBirb.cs" />
     <Compile Include="Assets\scripts\CollectableItem.cs" />
     <Compile Include="Assets\scripts\CollectionHandler.cs" />
     <Compile Include="Assets\scripts\Enums.cs" />
+    <Compile Include="Assets\scripts\GetEnum.cs" />
     <Compile Include="Assets\scripts\GridLayoutFitter.cs" />
     <Compile Include="Assets\scripts\HatchingBirb.cs" />
     <Compile Include="Assets\scripts\HatchingHandler.cs" />
