@@ -64,6 +64,7 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
             go.GetComponent<RectTransform>().offsetMax = Vector2.zero;
             go.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             Birb birb = go.GetComponent<Birb>().CreateNewBirbFromParents(birbList[0], birbList[1]);
+            birb.birbLocation = Enums.BirbLocation.NestParentsEgg;
             ph.allPlayerBirbs.Add(birb);
             return birb;
         }

@@ -297,6 +297,7 @@
     <Compile Include="Assets\scripts\Birb\BirbStats.cs" />
     <Compile Include="Assets\scripts\Birb\BirbStatus.cs" />
     <Compile Include="Assets\scripts\BirbHandler.cs" />
+    <Compile Include="Assets\scripts\BirbMover.cs" />
     <Compile Include="Assets\scripts\BreedingBirb.cs" />
     <Compile Include="Assets\scripts\BreedingHandler.cs" />
     <Compile Include="Assets\scripts\ButtonLongPress.cs" />

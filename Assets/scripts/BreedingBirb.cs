@@ -21,8 +21,6 @@ public class BreedingBirb : Birb {
             canMakeEgg = true;
         }
     }
-
-    //TODO: Make this work==============================================================================================================================================
     public override bool MoveBirb(Enums.BirbLocation location)
     {
         if (base.MoveBirb(location))
@@ -35,14 +33,13 @@ public class BreedingBirb : Birb {
         return false;
     }
 
-    public void TappedBirb()
+    public override void TappedBirb()
     {
         //CheckIfBirbCollectedAnything();
     }
 
-    public void LongTappedBirb()
+    public override void LongTappedBirb()
     {
-        //open birb modal
-        MoveBirb(Enums.BirbLocation.Aviary);
+        bh.CreateMoveBirbPopup(this);
     }
 }

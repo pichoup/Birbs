@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
     public PlayerHandler ph;
+    public ModalHandler mh;
+
     public Transform birbTransform;
     public GameObject birbPrefab;
     public List<T> birbList;
@@ -16,6 +19,7 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
     public virtual void Start()
     {
         ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
+        mh = GameObject.FindGameObjectWithTag("ModalHandler").GetComponent<ModalHandler>();
     }
 
     private void Update()
@@ -47,7 +51,7 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
             Enums.BirbLocation initialLocation = location;
 
             GameObject go = Instantiate(birbPrefab, Vector3.zero, Quaternion.identity);
-            go.transform.SetParent(birbTransform.GetChild(openBirbSlot));
+            go.transform.SetParent(birbTransform.GetChild(FindOpenBirbSlot()));
             go.GetComponent<RectTransform>().offsetMax = Vector2.zero;
             go.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             birbList.Add(go.GetComponent<T>());
@@ -61,6 +65,20 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
             return true;
         }
         return false;
+    }
+
+    protected virtual int FindOpenBirbSlot()
+    {
+        for (int i = 0; i < maxBirbsInThisInventory; i++)
+        {
+            if (transform.GetChild(i).childCount == 0)
+            {
+                return i;
+            }
+        }
+
+        //birbList is empty, return first slot
+        return 0;
     }
 
     protected virtual int CheckForOpenBirbSlot()
@@ -77,6 +95,15 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
         return birbTransform.childCount;
     }
 
+    public virtual void CreateMoveBirbPopup(Birb birb)
+    {
+        mh.OpenMoveBirbModal(birb.birbLocation, birbList.FindIndex(x => x == birb));
+    }
+
+    public virtual void MoveBirbInBirbList(int index, Enums.BirbLocation toLocation)
+    {
+        birbList[index].MoveBirb(toLocation);
+    }
 
     //public Enums.BirbLocation RemoveBirbFromHandler<T>(T birb, Enums.BirbLocation location) where T : Birb
     //{

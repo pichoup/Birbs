@@ -37,7 +37,7 @@ public class Birb : MonoBehaviour
         return (Birb)this.MemberwiseClone();
     }
 
-    public Birb CreateNewBirbFromParents (Birb parent1, Birb parent2)
+    public Birb CreateNewBirbFromParents (Birb parent1, Birb parent2, Enums.BirbLocation location = Enums.BirbLocation.NestParentsEgg)
     {
         parents = new List<Birb>();
         parents.Add(parent1.GetCopy());
@@ -67,6 +67,8 @@ public class Birb : MonoBehaviour
         stats.hatchTime = parents[Random.Range(0, parents.Count)].stats.hatchTime;
         stats.moveSpeed = parents[Random.Range(0, parents.Count)].stats.moveSpeed;
         stats.sight = parents[Random.Range(0, parents.Count)].stats.sight;
+
+        birbLocation = location;
 
         return (Birb)this.MemberwiseClone();
 
@@ -132,11 +134,11 @@ public class Birb : MonoBehaviour
 
     public virtual void TappedBirb()
     {
-        //TODO: change this to collection once thats made
-        MoveBirb(Enums.BirbLocation.Aviary);
+
     }
 
     public virtual void LongTappedBirb()
     {
+
     }
 }

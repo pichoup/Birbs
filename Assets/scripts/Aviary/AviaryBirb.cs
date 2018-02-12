@@ -6,8 +6,6 @@ public class AviaryBirb : Birb {
     public AviaryHandler ah;
     public GameObject itemNotification;
 
-    ModalHandler mh;
-
     public CollectableItem collectedItems;
 
     // Use this for initialization
@@ -23,8 +21,7 @@ public class AviaryBirb : Birb {
 
     public override void LongTappedBirb()
     {
-        //TODO: open birb info instead
-        MoveBirb(Enums.BirbLocation.NestParent);
+        ah.CreateMoveBirbPopup(this);
     }
 
     public override bool MoveBirb(Enums.BirbLocation location)

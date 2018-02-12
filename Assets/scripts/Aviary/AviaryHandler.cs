@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AviaryHandler : BirbHandler<AviaryBirb> {
-    public ModalHandler mh;
 
 	// Use this for initialization
 	public override void Start () {
         base.Start();
-        mh = GameObject.FindGameObjectWithTag("ModalHandler").GetComponent<ModalHandler>();
     }
 
     public void AddBirbDropsToInventory(CollectableItem ci)

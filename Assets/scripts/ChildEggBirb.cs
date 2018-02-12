@@ -2,15 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChildEggBirb : MonoBehaviour {
+public class ChildEggBirb : Birb {
+    public BreedingHandler bh;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Start()
+    {
+        bh = GameObject.FindGameObjectWithTag("BreedingHandler").GetComponent<BreedingHandler>();
+    }
+
+    public override bool MoveBirb(Enums.BirbLocation location)
+    {
+        if (base.MoveBirb(location))
+        {
+            bh.egg = null;
+            Destroy(this.gameObject);
+            return true;
+        }
+        return false;
+    }
+
+    public override void TappedBirb()
+    {
+        
+    }
+
+    public override void LongTappedBirb()
+    {
+        
+    }
 }
