@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChildEggBirb : Birb {
-    public ChildEggHandler ceh;
+public class CollectionBirb : Birb {
+    public CollectionHandler ch;
 
     void Start()
     {
-        ceh = GameObject.FindGameObjectWithTag("ChildEggHandler").GetComponent<ChildEggHandler>();
+        ch = GameObject.FindGameObjectWithTag("CollectionHandler").GetComponent<CollectionHandler>();
     }
 
     public override bool MoveBirb(Enums.BirbLocation location)
     {
         if (base.MoveBirb(location))
         {
-            ceh.ResetBreeding();
-            ceh.birbList.Remove(this);
+            ch.birbList.Remove(this);
             Destroy(this.gameObject);
             return true;
         }
@@ -24,11 +23,6 @@ public class ChildEggBirb : Birb {
 
     public override void TappedBirb()
     {
-        MoveBirb(Enums.BirbLocation.Collection);
-    }
-
-    public override void LongTappedBirb()
-    {
-        
+        ch.CreateMoveBirbPopup(this);
     }
 }

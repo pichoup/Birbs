@@ -13,13 +13,18 @@ public class Birb : MonoBehaviour
     public BirbStats stats;
     public Enums.BirbLocation birbLocation;
     public bool hatched;
+
     public ButtonLongPress blp;
 
     public BirbImage birbImage;
 
+    //make this better in future
+    public Sprite eggSprite;
+
     private void Awake()
     {
         blp = GetComponent<ButtonLongPress>();
+        eggSprite = Resources.Load<Sprite>("eggSprite");
     }
 
     public Birb SetBirbStats(Birb birb)
@@ -31,6 +36,7 @@ public class Birb : MonoBehaviour
         status = birb.status;
         stats = birb.stats;
         birbLocation = birb.birbLocation;
+        hatched = birb.hatched;
 
         SetBirbSpritesAndColours();
 
@@ -108,6 +114,20 @@ public class Birb : MonoBehaviour
                         return true;
                     }
                     break;
+
+                case Enums.BirbLocation.Collection:
+                    if (GameObject.FindGameObjectWithTag("CollectionHandler").GetComponent<CollectionHandler>().TryAddBirb(this, Enums.BirbLocation.Collection))
+                    {
+                        return true;
+                    }
+                    break;
+
+                case Enums.BirbLocation.NestHatching:
+                    if (GameObject.FindGameObjectWithTag("HatchingHandler").GetComponent<HatchingHandler>().TryAddBirb(this, Enums.BirbLocation.NestHatching))
+                    {
+                        return true;
+                    }
+                    break;
             }
         }
         return false;
@@ -120,16 +140,32 @@ public class Birb : MonoBehaviour
 
     public void SetBirbSpritesAndColours()
     {
-        birbImage.head.sprite = birbSprite.head;
-        birbImage.body.sprite = birbSprite.body;
-        birbImage.tail.sprite = birbSprite.tail;
-        birbImage.wings.sprite = birbSprite.wings;
-        birbImage.outline.sprite = birbSprite.outline;
+        if (hatched)
+        {
+            birbImage.head.enabled = true;
+            birbImage.body.enabled = true;
+            birbImage.tail.enabled = true;
+            birbImage.wings.enabled = true;
 
-        birbImage.head.color = birbColor.head;
-        birbImage.body.color = birbColor.body;
-        birbImage.tail.color = birbColor.tail;
-        birbImage.wings.color = birbColor.wings;
+            birbImage.head.sprite = birbSprite.head;
+            birbImage.body.sprite = birbSprite.body;
+            birbImage.tail.sprite = birbSprite.tail;
+            birbImage.wings.sprite = birbSprite.wings;
+            birbImage.outline.sprite = birbSprite.outline;
+
+            birbImage.head.color = birbColor.head;
+            birbImage.body.color = birbColor.body;
+            birbImage.tail.color = birbColor.tail;
+            birbImage.wings.color = birbColor.wings;
+        }
+        else
+        {
+            birbImage.head.enabled = false;
+            birbImage.body.enabled = false;
+            birbImage.tail.enabled = false;
+            birbImage.wings.enabled = false;
+            birbImage.outline.sprite = eggSprite;
+        }
     }
 
     public virtual void TappedBirb()
@@ -139,6 +175,6 @@ public class Birb : MonoBehaviour
 
     public virtual void LongTappedBirb()
     {
-
+        
     }
 }

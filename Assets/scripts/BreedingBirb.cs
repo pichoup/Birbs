@@ -35,11 +35,11 @@ public class BreedingBirb : Birb {
 
     public override void TappedBirb()
     {
-        //CheckIfBirbCollectedAnything();
+        bh.CreateMoveBirbPopup(this);
     }
 
     public override void LongTappedBirb()
     {
-        bh.CreateMoveBirbPopup(this);
+
     }
 }

@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BreedingHandler : BirbHandler<BreedingBirb> {
-    private bool breeding;
-    private float timeSinceBothParentsInBreeder;
+    public ChildEggHandler ceh;
 
-    public Transform childBirbTransform;
-    public GameObject childBirbPrefab;
-
-    public Birb egg;
+    public bool breeding;
+    public float timeSinceBothParentsInBreeder;
 
     public override void Start()
     {
+        handlerLocation = Enums.BirbLocation.NestParent;
         base.Start();
+        ceh = GameObject.FindGameObjectWithTag("ChildEggHandler").GetComponent<ChildEggHandler>();
     }
 
     public override bool TryAddBirb(Birb birb, Enums.BirbLocation location)
     {
-
         if (base.TryAddBirb(birb, location))
         {
             ResetBreeding();
@@ -30,12 +28,12 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
     //birbs try to breed until an egg is made
     public override void UpdateBirbs(List<BreedingBirb> birbList, float time = 0f)
     {
-        if (breeding)
+        if (breeding && birbList.Count == 2)
         {
             base.UpdateBirbs(birbList, time);
             timeSinceBothParentsInBreeder += time;
 
-            bool canMakeEgg = egg == null ? true : false;
+            bool canMakeEgg = ceh.birbList.Count == 0 ? true : false;
             foreach (BreedingBirb bb in birbList)
             {
                 bb.TickBirb();
@@ -46,29 +44,9 @@ public class BreedingHandler : BirbHandler<BreedingBirb> {
             }
             if (canMakeEgg)
             {
-                egg = TryMakeEgg(birbList[0].stats.breedTime, birbList[1].stats.breedTime);
-                if (egg != null)
-                {
-                    breeding = false;
-                }
+                ceh.TryMakeEgg();
             }
         }
-    }
-
-    private Birb TryMakeEgg(float breedTime1, float breedTime2)
-    {
-        if (timeSinceBothParentsInBreeder >= (breedTime1 + breedTime2) / 2f)
-        {
-            GameObject go = Instantiate(childBirbPrefab, Vector3.zero, Quaternion.identity);
-            go.transform.SetParent(childBirbTransform);
-            go.GetComponent<RectTransform>().offsetMax = Vector2.zero;
-            go.GetComponent<RectTransform>().offsetMin = Vector2.zero;
-            Birb birb = go.GetComponent<Birb>().CreateNewBirbFromParents(birbList[0], birbList[1]);
-            birb.birbLocation = Enums.BirbLocation.NestParentsEgg;
-            ph.allPlayerBirbs.Add(birb);
-            return birb;
-        }
-        return null;
     }
 
     public void ResetBreeding(bool breed = true)

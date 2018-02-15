@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class HatchingBirb : Birb {
-
+    public HatchingHandler hh;
     public float hatchTimer;
+
+    void Start()
+    {
+        hh = GameObject.FindGameObjectWithTag("HatchingHandler").GetComponent<HatchingHandler>();
+    }
 
     public override void TickBirb(float time = 0f)
     {
@@ -16,17 +21,26 @@ public class HatchingBirb : Birb {
         }
     }
 
-    //TODO: Make this work==============================================================================================================================================
     public override bool MoveBirb(Enums.BirbLocation location)
     {
-        base.MoveBirb(location);
+        if (base.MoveBirb(location))
+        {
+            hh.birbList.Remove(this);
+            Destroy(this.gameObject);
+            return true;
+        }
         return false;
     }
 
     private void HatchBirb()
     {
         hatched = true;
-
+        SetBirbSpritesAndColours();
         //Change egg sprite to hatched birb sprite
+    }
+
+    public override void TappedBirb()
+    {
+        hh.CreateMoveBirbPopup(this);
     }
 }

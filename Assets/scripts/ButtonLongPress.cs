@@ -6,7 +6,7 @@ public class ButtonLongPress : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 {
     [SerializeField]
     [Tooltip("How long must pointer be down on this object to trigger a long press")]
-    private float holdTime = 1f;
+    private float holdTime = 0.2f;
     private bool held = false;
 
     public UnityEvent onClick;// = new UnityEvent();

@@ -7,6 +7,7 @@ public class AviaryHandler : BirbHandler<AviaryBirb> {
 
 	// Use this for initialization
 	public override void Start () {
+        handlerLocation = Enums.BirbLocation.Aviary;
         base.Start();
     }
 

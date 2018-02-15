@@ -29,7 +29,7 @@ public class ModalHandler : MonoBehaviour {
         {
             GameObject go = Instantiate(popupPrefab, popupParent, false);
             go.transform.GetChild(1).GetComponent<Image>().sprite = p.image;
-            go.transform.GetChild(2).GetComponent<Text>().text = "You Got " + p.amount + " " + p.text;
+            go.transform.GetChild(2).GetComponent<Text>().text = "You got " + p.amount + " " + p.text;
         }
         popups.Clear();
     }
