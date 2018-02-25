@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TabNavigator : MonoBehaviour {
     public List<RectTransform> tabs;
-    public Text headerText;
 
     public void NavigateToTab(string tab)
     {
@@ -22,6 +21,5 @@ public class TabNavigator : MonoBehaviour {
                 t.offsetMax = new Vector2(3000f, 0f);
             }
         }
-        headerText.text = tab;
     }
 }

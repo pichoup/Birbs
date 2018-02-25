@@ -26,14 +26,14 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
         birbList = new List<T>();
 
         Type type = typeof(T);
-        for (int i = 0; i < ph.allPlayerBirbs.Count; i++)
-        {
-            if (ph.allPlayerBirbs[i].birbLocation == GetLocationFromBirbType(type))
-            {
-                TryAddBirb(ph.allPlayerBirbs[i], ph.allPlayerBirbs[i].birbLocation);
-                Destroy(ph.allPlayerBirbs[i].gameObject);
-            }
-        }
+        //for (int i = 0; i < ph.allPlayerBirbs.Count; i++)
+        //{
+        //    if (ph.allPlayerBirbs[i].birbLocation == GetLocationFromBirbType(type))
+        //    {
+        //        TryAddBirb(ph.allPlayerBirbs[i], ph.allPlayerBirbs[i].birbLocation);
+        //        Destroy(ph.allPlayerBirbs[i].gameObject);
+        //    }
+        //}
     }
 
     private void Update()
@@ -41,11 +41,11 @@ public abstract class BirbHandler<T> : MonoBehaviour where T : Birb {
         if (birbsNeedToTick)
         {
             timer += Time.deltaTime;
-            if (timer > ph.defaultTickRate)
-            {
-                timer = 0f;
-                UpdateBirbs(birbList, ph.defaultTickRate);
-            }
+            //if (timer > ph.defaultTickRate)
+            //{
+            //    timer = 0f;
+            //    UpdateBirbs(birbList, ph.defaultTickRate);
+            //}
         }
     }
 

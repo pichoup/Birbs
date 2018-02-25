@@ -32,7 +32,7 @@ public class ChildEggHandler : BirbHandler<ChildEggBirb> {
             go.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             Birb birb = go.GetComponent<Birb>().CreateNewBirbFromParents(bh.birbList[0], bh.birbList[1]);
             birb.birbLocation = Enums.BirbLocation.NestParentsEgg;
-            ph.allPlayerBirbs.Add(birb);
+            //ph.allPlayerBirbs.Add(birb);
             return birb;
         }
         return null;

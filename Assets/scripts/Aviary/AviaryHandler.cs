@@ -18,7 +18,7 @@ public class AviaryHandler : BirbHandler<AviaryBirb> {
         //make collectable items a list or something in the future
         if (ci.seeds > 0)
         {
-            ph.collectableItems.seeds += ci.seeds;
+            //ph.collectableItems.seeds += ci.seeds;
             mh.AddPopupToList("seeds", 0, ci.seeds);
             ci.seeds = 0;
             aBirbCollectedStuff = true;
@@ -26,7 +26,7 @@ public class AviaryHandler : BirbHandler<AviaryBirb> {
 
         if (ci.worms > 0)
         {
-            ph.collectableItems.worms += ci.worms;
+            //ph.collectableItems.worms += ci.worms;
             mh.AddPopupToList("worms", 1, ci.worms);
             ci.worms = 0;
             aBirbCollectedStuff = true;
