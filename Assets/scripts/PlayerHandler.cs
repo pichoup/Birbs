@@ -47,6 +47,7 @@ public class PlayerHandler : MonoBehaviour {
         birb.transform.SetParent(collection);
         birbs.Add(birb);
         RecalculateCollectablesPerSecond();
+        UpdateDisplay();
     }
 
     private void UpdateDisplay()
