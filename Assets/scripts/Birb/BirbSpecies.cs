@@ -10,13 +10,6 @@ public class BirbSpecies {
     public BirbSprite sprite;
     public List<BirbColors> defaultColors;
 
-
-    //temp
-    public int seedDrops;
-    public float dropCooldown;
-    public int seedsToHatch;
-
-
     public BirbColors GetWeightedDefaultColor()
     {
         int weight = 0;

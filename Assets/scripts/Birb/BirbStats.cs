@@ -4,17 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class BirbStats{
-    public float growthPercent;
-    public float growthRate;
-    public float moveSpeed;
-    public float sight;
-    public float carryWeight;
-
-    //Aviary
     public CollectableItem collectAmount;
+    public CollectableItem befriendCost;
     public float collectTime;
-
-    //Breeder
-    public float breedTime;
-    public float hatchTime;
 }

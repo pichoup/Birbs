@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHandler : MonoBehaviour {
-    public List<FeederBirb> birbs;
+    public List<Birb> birbs;
     public Transform collection;
     public Text resources;
 
@@ -15,7 +15,7 @@ public class PlayerHandler : MonoBehaviour {
 
     private void Start()
     {
-        birbs = new List<FeederBirb>();
+        birbs = new List<Birb>();
         UpdateDisplay();
     }
 
@@ -23,10 +23,10 @@ public class PlayerHandler : MonoBehaviour {
     {
         collectablesPerSecond = new CollectableItem();
 
-        foreach (FeederBirb b in birbs)
+        foreach (Birb b in birbs)
         {
-            collectablesPerSecond.seeds += b.collectAmount.seeds;
-            collectablesPerSecond.worms += b.collectAmount.worms;
+            collectablesPerSecond.seeds += b.birbStats.collectAmount.seeds;
+            collectablesPerSecond.worms += b.birbStats.collectAmount.worms;
         }
     }
 
@@ -42,7 +42,7 @@ public class PlayerHandler : MonoBehaviour {
         }
     }
 
-    public void AddBirbToCollection(FeederBirb birb)
+    public void AddBirbToCollection(Birb birb)
     {
         birb.transform.SetParent(collection);
         birbs.Add(birb);

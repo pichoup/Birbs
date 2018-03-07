@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FeederSlot : MonoBehaviour {
-    public FeederBirb wildBirb;
+public class BirbSlot : MonoBehaviour {
+    public Birb slotBirb;
     public CollectableItem unlockCost;
-    public CollectableItem itemsInFeeder;
     public PlayerHandler ph;
     public CrappyDatabase cd;
+
+    public GameObject birbPopupModal;
 
     public GameObject birbPrefab;
 
@@ -23,7 +24,7 @@ public class FeederSlot : MonoBehaviour {
 
     private void Update()
     {
-        if (wildBirb == null && unlocked)
+        if (slotBirb == null && unlocked)
         {
             timer -= Time.deltaTime;
             if (timer <= 0f)
@@ -48,12 +49,10 @@ public class FeederSlot : MonoBehaviour {
     {
         if (unlocked)
         {
-            if (wildBirb != null)
+            if (slotBirb != null)
             {
-                //Display You got birb thing here
-
-                ph.AddBirbToCollection(wildBirb);
-                wildBirb = null;
+                birbPopupModal.GetComponent<BirbPopup>().PopulatePopup(this);
+                birbPopupModal.SetActive(true);
             }
         }
         else
@@ -65,7 +64,18 @@ public class FeederSlot : MonoBehaviour {
     private void GenerateNewBirb()
     {
         GameObject birb = Instantiate(birbPrefab, this.transform, false);
-        wildBirb = birb.GetComponent<FeederBirb>();
-        wildBirb.CreateRandomBirb(cd);
+        slotBirb = birb.GetComponent<Birb>();
+        slotBirb.CreateRandomBirb(cd);
+    }
+
+    public void AddBirbToCollection()
+    {
+        ph.AddBirbToCollection(slotBirb);
+        slotBirb = null;
+    }
+
+    public void DestroyBirb()
+    {
+        Destroy(slotBirb.gameObject);
     }
 }
