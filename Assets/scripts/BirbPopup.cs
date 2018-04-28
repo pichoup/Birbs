@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BirbPopup : MonoBehaviour {
     public PlayerHandler ph;
     public BirbStatsPopup statsPopup;
+    public Birb displayBirb;
 
     public Text befriendText;
 
@@ -13,8 +14,8 @@ public class BirbPopup : MonoBehaviour {
 
     public void PopulatePopup(BirbSlot birbSlot)
     {
-        _birbSlot.slotBirb = _birbSlot.slotBirb.SetBirbStats(_birbSlot.slotBirb);
         _birbSlot = birbSlot;
+        displayBirb.SetBirbStats(_birbSlot.slotBirb);
 
         befriendText.text = "Befriend birb\n- " + _birbSlot.slotBirb.birbStats.befriendCost.seeds + " Seeds\n- " + _birbSlot.slotBirb.birbStats.befriendCost.worms + " Worms";
 

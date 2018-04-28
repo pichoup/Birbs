@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BirbStatsPopup : MonoBehaviour {
     public PlayerHandler ph;
+    public Birb displayBirb;
 
-    public Text befriendText;
     public Text levelText;
     public Text ExperienceText;
     public Text statsText;
@@ -14,13 +14,18 @@ public class BirbStatsPopup : MonoBehaviour {
     public Text feedBirbText;
 
     private BirbSlot _birbSlot;
+    public GameObject feedBirbButton;
+    public GameObject playBirbButton;
 
     public void PopulatePopup(BirbSlot birbSlot)
     {
-        _birbSlot.slotBirb = _birbSlot.slotBirb.SetBirbStats(_birbSlot.slotBirb);
         _birbSlot = birbSlot;
+        displayBirb.SetBirbStats(_birbSlot.slotBirb);
 
+        feedBirbButton.SetActive(!displayBirb.isWildBirb);
+        playBirbButton.SetActive(!displayBirb.isWildBirb);
 
+        SetStats();
     }
 
     public void BackButton()
@@ -36,5 +41,15 @@ public class BirbStatsPopup : MonoBehaviour {
     public void PetBirb()
     {
 
+    }
+
+    public void SetStats()
+    {
+        //Add all other text, give birbs leveling mechanics
+
+
+        statsText.text = "Seeds: " + displayBirb.birbStats.collectAmount.seeds + " / s\nWorms: " +
+            displayBirb.birbStats.collectAmount.worms + " / s\nCollect Cooldown: " +
+            displayBirb.birbStats.collectTime + " s";
     }
 }

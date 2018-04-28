@@ -19,13 +19,14 @@ public class Birb : MonoBehaviour
         birbColor = birb.birbColor;
         birbSprite = birb.birbSprite;
         birbStats = birb.birbStats;
+        isWildBirb = birb.isWildBirb;
 
         SetBirbSpritesAndColours();
 
         return (Birb)this.MemberwiseClone();
     }
 
-    public void CreateRandomBirb(CrappyDatabase cd)
+    public void CreateRandomBirb(CrappyDatabase cd, bool wildBirb = false)
     {
         speciesId = cd.allBirbs[Random.Range(0, cd.allBirbs.Count)].id;
         BirbSpecies species = cd.GetSpeciesById(speciesId);
@@ -36,6 +37,8 @@ public class Birb : MonoBehaviour
 
         birbStats.befriendCost.seeds = Random.Range(50, 150);
         birbStats.befriendCost.worms = Random.Range(50, 150);
+
+        isWildBirb = wildBirb;
 
         SetBirbSpritesAndColours();
     }

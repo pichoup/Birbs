@@ -65,7 +65,7 @@ public class BirbSlot : MonoBehaviour {
     {
         GameObject birb = Instantiate(birbPrefab, this.transform, false);
         slotBirb = birb.GetComponent<Birb>();
-        slotBirb.CreateRandomBirb(cd);
+        slotBirb.CreateRandomBirb(cd, true);
     }
 
     public void AddBirbToCollection()
