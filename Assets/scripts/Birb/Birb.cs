@@ -69,6 +69,6 @@ public class Birb : MonoBehaviour
 
     public virtual void LongTappedBirb()
     {
-
+        Debug.Log("LongTappedBirb");
     }
 }
