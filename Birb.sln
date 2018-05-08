@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Birb", "Birb.csproj", "{0E1C9E80-2222-A473-1DED-289BBAAF06DC}"
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Birb", "Assembly-CSharp.csproj", "{A490B848-188F-485C-9203-EFF824787523}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0E1C9E80-2222-A473-1DED-289BBAAF06DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E1C9E80-2222-A473-1DED-289BBAAF06DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E1C9E80-2222-A473-1DED-289BBAAF06DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E1C9E80-2222-A473-1DED-289BBAAF06DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A490B848-188F-485C-9203-EFF824787523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A490B848-188F-485C-9203-EFF824787523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A490B848-188F-485C-9203-EFF824787523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A490B848-188F-485C-9203-EFF824787523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
