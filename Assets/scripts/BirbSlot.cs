@@ -70,7 +70,7 @@ public class BirbSlot : MonoBehaviour {
 
     public void AddBirbToCollection()
     {
-        ph.AddBirbToCollection(slotBirb);
+        ph.AddBirbToAviary(slotBirb);
         slotBirb = null;
     }
 
