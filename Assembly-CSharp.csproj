@@ -73,6 +73,7 @@
     <Compile Include="Assets\scripts\BirbStatsPopup.cs" />
     <Compile Include="Assets\scripts\ButtonLongPress.cs" />
     <Compile Include="Assets\scripts\CollectableItem.cs" />
+    <Compile Include="Assets\scripts\FeederCycler.cs" />
     <Compile Include="Assets\scripts\GridLayoutFitter.cs" />
     <Compile Include="Assets\scripts\ObjectDragger.cs" />
     <Compile Include="Assets\scripts\PlayerHandler.cs" />

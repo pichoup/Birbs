@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BirbSlot : MonoBehaviour {
     public Birb slotBirb;
     public CollectableItem unlockCost;
+    public CollectableItem slotItems;
     public PlayerHandler ph;
     public CrappyDatabase cd;
 

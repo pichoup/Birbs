@@ -3,6 +3,12 @@ public class CollectableItem {
     public int seeds;
     public int worms;
 
+    public CollectableItem()
+    {
+        seeds = 0;
+        worms = 0;
+    }
+
     public CollectableItem Add(CollectableItem c1, CollectableItem c2)
     {
         CollectableItem c = new CollectableItem();

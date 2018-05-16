@@ -26,8 +26,10 @@ public class Birb : MonoBehaviour
         return (Birb)this.MemberwiseClone();
     }
 
-    public void CreateRandomBirb(CrappyDatabase cd, bool wildBirb = false)
+    public void CreateRandomBirb(CrappyDatabase cd, bool wildBirb = true, CollectableItem inputItems = null)
     {
+        inputItems = inputItems ?? new CollectableItem();
+
         speciesId = cd.allBirbs[Random.Range(0, cd.allBirbs.Count)].id;
         BirbSpecies species = cd.GetSpeciesById(speciesId);
         birbColor = species.GetWeightedDefaultColor();
