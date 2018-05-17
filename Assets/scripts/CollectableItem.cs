@@ -9,7 +9,17 @@ public class CollectableItem {
         worms = 0;
     }
 
-    public CollectableItem Add(CollectableItem c1, CollectableItem c2)
+    public bool HasItems()
+    {
+        if (seeds > 0 || worms > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static CollectableItem Add(CollectableItem c1, CollectableItem c2)
     {
         CollectableItem c = new CollectableItem();
         c.seeds = c1.seeds + c2.seeds;
@@ -23,7 +33,7 @@ public class CollectableItem {
     /// <param name="c1"></param>
     /// <param name="c2"></param>
     /// <returns></returns>
-    public CollectableItem Subtract(CollectableItem c1, CollectableItem c2)
+    public static CollectableItem Subtract(CollectableItem c1, CollectableItem c2)
     {
         CollectableItem c = new CollectableItem();
         c.seeds = c1.seeds - c2.seeds;
@@ -31,7 +41,7 @@ public class CollectableItem {
         return c;
     }
 
-    public bool HasEnoughResources(CollectableItem inventory, CollectableItem subtractAmount)
+    public static bool HasEnoughResources(CollectableItem inventory, CollectableItem subtractAmount)
     {
         if (subtractAmount.seeds > inventory.seeds)
             return false;

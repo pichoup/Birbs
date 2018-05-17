@@ -8,33 +8,21 @@ public class BirbSlot : MonoBehaviour {
     public CollectableItem unlockCost;
     public CollectableItem slotItems;
     public PlayerHandler ph;
-    public CrappyDatabase cd;
+    public FeederCycler fc;
 
     public GameObject birbPopupModal;
-
     public GameObject birbPrefab;
 
-    private float timer = 2f;
-    private bool unlocked;
+    public float timer = 2f;
+    public bool unlocked;
+    public bool canAttractBirb;
 
     private void Start()
     {
         ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
-        cd = GameObject.Find("CrappyDatabase").GetComponent<CrappyDatabase>();
+        fc = transform.parent.GetComponent<FeederCycler>();
     }
 
-    private void Update()
-    {
-        if (slotBirb == null && unlocked)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0f)
-            {
-                timer = Random.Range(5f, 20f);
-                GenerateNewBirb();
-            }
-        }
-    }
     private void TryUnlock()
     {
         if (ph.totalCollectableItems.seeds >= unlockCost.seeds && ph.totalCollectableItems.worms >= unlockCost.worms)
@@ -42,6 +30,7 @@ public class BirbSlot : MonoBehaviour {
             unlocked = true;
             ph.totalCollectableItems.seeds -= unlockCost.seeds;
             ph.totalCollectableItems.worms -= unlockCost.worms;
+            fc.UpdateBirbSlots();
             transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
     }
@@ -62,12 +51,12 @@ public class BirbSlot : MonoBehaviour {
         }
     }
 
-    private void GenerateNewBirb()
-    {
-        GameObject birb = Instantiate(birbPrefab, this.transform, false);
-        slotBirb = birb.GetComponent<Birb>();
-        slotBirb.CreateRandomBirb(cd, true);
-    }
+    //private void GenerateNewBirb()
+    //{
+    //    GameObject birb = Instantiate(birbPrefab, this.transform, false);
+    //    slotBirb = birb.GetComponent<Birb>();
+    //    slotBirb.CreateRandomBirb(cd, true);
+    //}
 
     public void AddBirbToCollection()
     {
@@ -75,8 +64,44 @@ public class BirbSlot : MonoBehaviour {
         slotBirb = null;
     }
 
+    //Check for amount of items being added/subtracted elsewhere making sure it can do the subtraction
+    public void AddItems(CollectableItem item)
+    {
+        slotItems = CollectableItem.Add(slotItems, item);
+        if (slotItems.HasItems())
+        {
+            canAttractBirb = true;
+        }
+        else
+        {
+            canAttractBirb = false;
+        }
+    }
+
+    public void RemoveItems(CollectableItem item)
+    {
+        if (CollectableItem.HasEnoughResources(slotItems, item))
+        {
+            slotItems = CollectableItem.Subtract(slotItems, item);
+        }
+        if (slotItems.HasItems())
+        {
+            canAttractBirb = true;
+        }
+        else
+        {
+            canAttractBirb = false;
+        }
+    }
+
     public void DestroyBirb()
     {
         Destroy(slotBirb.gameObject);
+    }
+
+    public void ResetTimer()
+    {
+        //TODO: Add logic for increasing timers for adding more items
+        timer = 10f;
     }
 }
