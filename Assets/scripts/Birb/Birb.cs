@@ -37,8 +37,8 @@ public class Birb : MonoBehaviour
         birbStats.collectAmount.seeds = Random.Range(1, 5);
         birbStats.collectAmount.worms = Random.Range(1, 5);
 
-        birbStats.befriendCost.seeds = Random.Range(50, 150);
-        birbStats.befriendCost.worms = Random.Range(50, 150);
+        birbStats.minimumFeederAmount.seeds = Random.Range(50, 150);
+        birbStats.minimumFeederAmount.worms = Random.Range(50, 150);
 
         isWildBirb = wildBirb;
 

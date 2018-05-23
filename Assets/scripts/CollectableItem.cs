@@ -19,6 +19,12 @@ public class CollectableItem {
         return false;
     }
 
+    /// <summary>
+    /// Adds amount c1 and c2 together
+    /// </summary>
+    /// <param name="c1"></param>
+    /// <param name="c2"></param>
+    /// <returns></returns>
     public static CollectableItem Add(CollectableItem c1, CollectableItem c2)
     {
         CollectableItem c = new CollectableItem();

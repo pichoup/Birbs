@@ -17,7 +17,7 @@ public class BirbPopup : MonoBehaviour {
         _birbSlot = birbSlot;
         displayBirb.SetBirbStats(_birbSlot.slotBirb);
 
-        befriendText.text = "Befriend birb\n- " + _birbSlot.slotBirb.birbStats.befriendCost.seeds + " Seeds\n- " + _birbSlot.slotBirb.birbStats.befriendCost.worms + " Worms";
+        befriendText.text = "Befriend birb\n- " + _birbSlot.slotBirb.birbStats.minimumFeederAmount.seeds + " Seeds\n- " + _birbSlot.slotBirb.birbStats.minimumFeederAmount.worms + " Worms";
 
     }
 
@@ -34,10 +34,9 @@ public class BirbPopup : MonoBehaviour {
 
     public void TryBefriend()
     {
-        if (ph.totalCollectableItems.seeds >= _birbSlot.slotBirb.birbStats.befriendCost.seeds && ph.totalCollectableItems.worms >= _birbSlot.slotBirb.birbStats.befriendCost.worms)
+        if (CollectableItem.HasEnoughResources(ph.totalCollectableItems, _birbSlot.slotBirb.birbStats.minimumFeederAmount))
         {
-            ph.totalCollectableItems.seeds -= _birbSlot.slotBirb.birbStats.befriendCost.seeds;
-            ph.totalCollectableItems.worms -= _birbSlot.slotBirb.birbStats.befriendCost.worms;
+            ph.totalCollectableItems = CollectableItem.Subtract(ph.totalCollectableItems, _birbSlot.slotBirb.birbStats.minimumFeederAmount);
             _birbSlot.AddBirbToCollection();
             gameObject.SetActive(false);
         }

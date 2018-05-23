@@ -51,12 +51,19 @@ public class BirbSlot : MonoBehaviour {
         }
     }
 
-    //private void GenerateNewBirb()
-    //{
-    //    GameObject birb = Instantiate(birbPrefab, this.transform, false);
-    //    slotBirb = birb.GetComponent<Birb>();
-    //    slotBirb.CreateRandomBirb(cd, true);
-    //}
+    public bool AddBirbToSlot()
+    {
+        if (slotBirb != null)
+            return false;
+
+        GameObject birbObject = Instantiate(birbPrefab, this.transform, false);
+        slotBirb = birbObject.GetComponent<Birb>();
+        slotBirb.CreateRandomBirb(fc.cd);
+
+        //fix this, add stuff here
+
+        return true;
+    }
 
     public void AddBirbToCollection()
     {

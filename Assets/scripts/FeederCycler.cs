@@ -37,8 +37,23 @@ public class FeederCycler : MonoBehaviour {
         }
     }
 
-    private void GenerateBirbForSlot(BirbSlot slot)
+    private void GenerateNewBirbForSlot(BirbSlot slot)
     {
+        //List<Birb> spawnableBirbs = new List<Birb>();
+
+        ////add all birbs that can spawn into a list
+        //foreach (Birb b in wildBirbs)
+        //{
+        //    if (CollectableItem.HasEnoughResources(slot.slotItems, b.birbStats.minimumFeederAmount))
+        //    {
+        //        spawnableBirbs.Add(b);
+        //    }  
+        //}
+
+        ////pick a random birb to spawn from list
+        //int rand = Random.Range(0, spawnableBirbs.Count - 1);
+
+        slot.AddBirbToSlot();
 
     }
 
@@ -54,9 +69,9 @@ public class FeederCycler : MonoBehaviour {
 
     private void TryAddBirbForBirbSlot(BirbSlot bs)
     {
-        if (Random.value >= 0.7f && wildBirbs.Count < wildBirbSize)
+        if (Random.value >= 0.0f && wildBirbs.Count < wildBirbSize)
         {
-            GenerateBirbForSlot(bs);
+            GenerateNewBirbForSlot(bs);
         }
         else
         {
