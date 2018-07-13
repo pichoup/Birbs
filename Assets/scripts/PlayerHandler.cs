@@ -10,8 +10,9 @@ public class PlayerHandler : MonoBehaviour {
     public Text resources;
 
     public GameObject aviaryBirbPrefab;
+    public BirbStatsPopup statsPopup;
 
-    public CollectableItem totalCollectableItems;
+    public CollectableItem totalCollectableItems { get; private set; }
     public CollectableItem collectablesPerSecond;
 
     private float timer;
@@ -19,6 +20,7 @@ public class PlayerHandler : MonoBehaviour {
     private void Start()
     {
         birbs = new List<Birb>();
+        totalCollectableItems = new CollectableItem(20, 20);
         UpdateDisplay();
     }
 
@@ -33,23 +35,23 @@ public class PlayerHandler : MonoBehaviour {
         }
     }
 
-    private void Update()
-    {
-        timer -= Time.deltaTime;
-        if (timer <= 0f)
-        {
-            timer = 1f;
-            totalCollectableItems.seeds += collectablesPerSecond.seeds;
-            totalCollectableItems.worms += collectablesPerSecond.worms;
-            UpdateDisplay();
-        }
-    }
+    //private void Update()
+    //{
+    //    timer -= Time.deltaTime;
+    //    if (timer <= 0f)
+    //    {
+    //        timer = 1f;
+    //        totalCollectableItems.seeds += collectablesPerSecond.seeds;
+    //        totalCollectableItems.worms += collectablesPerSecond.worms;
+    //        UpdateDisplay();
+    //    }
+    //}
 
     public void AddBirbToCollection(Birb birb)
     {
         birb.transform.SetParent(collection);
         birbs.Add(birb);
-        RecalculateCollectablesPerSecond();
+        //RecalculateCollectablesPerSecond();
         UpdateDisplay();
     }
 
@@ -58,9 +60,22 @@ public class PlayerHandler : MonoBehaviour {
         Vector3 position = GetEmptyPositionInsideRect(aviary);
         Birb b = Instantiate(aviaryBirbPrefab, position, Quaternion.identity, aviary).GetComponent<Birb>();
         b.SetBirbStats(birb);
+        b.isWildBirb = false;
         Destroy(birb.gameObject);
         birbs.Add(b);
-        RecalculateCollectablesPerSecond();
+        //RecalculateCollectablesPerSecond();
+        UpdateDisplay();
+    }
+
+    public void AddResources(CollectableItem amount)
+    {
+        totalCollectableItems = CollectableItem.Add(totalCollectableItems, amount);
+        UpdateDisplay();
+    }
+
+    public void SubtractResources(CollectableItem amount)
+    {
+        totalCollectableItems = CollectableItem.Subtract(totalCollectableItems, amount);
         UpdateDisplay();
     }
 
@@ -76,5 +91,11 @@ public class PlayerHandler : MonoBehaviour {
         rect.GetWorldCorners(corners);
 
         return (new Vector3((corners[2].x - corners[0].x) / 2f + corners[0].x, (corners[2].y - corners[0].y) / 2f + corners[0].y, 0f));  
+    }
+
+    public void CheckStats(Birb birb)
+    {
+        statsPopup.PopulatePopup(birb);
+        statsPopup.gameObject.SetActive(birb);
     }
 }

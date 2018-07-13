@@ -13,6 +13,15 @@ public class Birb : MonoBehaviour
 
     public BirbImage birbImage;
 
+    public float timer;
+    public GameObject popup;
+    public PlayerHandler ph;
+
+    private void Awake()
+    {
+        ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
+    }
+
     public Birb SetBirbStats(Birb birb)
     {
         speciesId = birb.speciesId;
@@ -22,11 +31,12 @@ public class Birb : MonoBehaviour
         isWildBirb = birb.isWildBirb;
 
         SetBirbSpritesAndColours();
+        timer = birbStats.collectTime;
 
         return (Birb)this.MemberwiseClone();
     }
 
-    public void CreateRandomBirb(CrappyDatabase cd, bool wildBirb = true, CollectableItem inputItems = null)
+    public void CreateRandomBirb(CrappyDatabase cd, bool wildBirb = true, CollectableItem inputItems = null, bool firstBirb = false)
     {
         inputItems = inputItems ?? new CollectableItem();
 
@@ -34,14 +44,17 @@ public class Birb : MonoBehaviour
         BirbSpecies species = cd.GetSpeciesById(speciesId);
         birbColor = species.GetWeightedDefaultColor();
         birbSprite = species.sprite;
-        birbStats.collectAmount.seeds = Random.Range(1, 5);
-        birbStats.collectAmount.worms = Random.Range(1, 5);
+        birbStats.collectAmount.seeds = Random.Range(5, 6);
+        birbStats.collectAmount.worms = Random.Range(1, 2);
+        birbStats.collectTime = Random.Range(5f, 6f);
 
-        birbStats.minimumFeederAmount.seeds = Random.Range(50, 150);
-        birbStats.minimumFeederAmount.worms = Random.Range(50, 150);
+        if (!firstBirb)
+        {
+            birbStats.befriendCost.seeds = Random.Range(30, 50);
+            birbStats.befriendCost.worms = Random.Range(5, 20);
+        }
 
         isWildBirb = wildBirb;
-
         SetBirbSpritesAndColours();
     }
 
@@ -67,10 +80,39 @@ public class Birb : MonoBehaviour
     public virtual void TappedBirb()
     {
         Debug.Log("Tapped");
+        if (popup.activeSelf)
+        {
+            popup.SetActive(false);
+
+            //give players stuff here
+            ph.AddResources(birbStats.collectAmount);
+            timer = birbStats.collectTime;
+        }
+        else
+        {
+            ph.CheckStats(this);
+        }
     }
 
     public virtual void LongTappedBirb()
     {
         Debug.Log("LongTappedBirb");
+    }
+
+    void Update()
+    {
+        if (!isWildBirb)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
+            {
+                CreatePopup();
+            }
+        }
+    }
+
+    private void CreatePopup()
+    {
+        popup.SetActive(true);
     }
 }

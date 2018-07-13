@@ -9,6 +9,12 @@ public class CollectableItem {
         worms = 0;
     }
 
+    public CollectableItem(int _seeds, int _worms)
+    {
+        seeds = _seeds;
+        worms = _worms;
+    }
+
     public bool HasItems()
     {
         if (seeds > 0 || worms > 0)

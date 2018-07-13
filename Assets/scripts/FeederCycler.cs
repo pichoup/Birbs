@@ -25,7 +25,7 @@ public class FeederCycler : MonoBehaviour {
     {
         foreach (BirbSlot bs in birbSlots)
         {
-            if (bs.slotBirb == null && bs.unlocked)
+            if (bs.slotBirb == null && bs.unlocked && bs.canAttractBirb)
             {
                 bs.timer -= Time.deltaTime;
                 if (bs.timer <= 0f)
@@ -44,7 +44,7 @@ public class FeederCycler : MonoBehaviour {
         ////add all birbs that can spawn into a list
         //foreach (Birb b in wildBirbs)
         //{
-        //    if (CollectableItem.HasEnoughResources(slot.slotItems, b.birbStats.minimumFeederAmount))
+        //    if (CollectableItem.HasEnoughResources(slot.slotItems, b.birbStats.befriendCost))
         //    {
         //        spawnableBirbs.Add(b);
         //    }  

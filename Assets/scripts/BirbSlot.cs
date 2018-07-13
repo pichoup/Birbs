@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BirbSlot : MonoBehaviour {
     public Birb slotBirb;
     public CollectableItem unlockCost;
+    public CollectableItem slotCost;
     public CollectableItem slotItems;
     public PlayerHandler ph;
     public FeederCycler fc;
@@ -17,6 +18,8 @@ public class BirbSlot : MonoBehaviour {
     public bool unlocked;
     public bool canAttractBirb;
 
+    public bool firstBirb = true;
+
     private void Start()
     {
         ph = GameObject.FindGameObjectWithTag("PlayerHandler").GetComponent<PlayerHandler>();
@@ -25,11 +28,21 @@ public class BirbSlot : MonoBehaviour {
 
     private void TryUnlock()
     {
-        if (ph.totalCollectableItems.seeds >= unlockCost.seeds && ph.totalCollectableItems.worms >= unlockCost.worms)
+        if (CollectableItem.HasEnoughResources(ph.totalCollectableItems, unlockCost))
         {
+            ph.SubtractResources(unlockCost);
             unlocked = true;
-            ph.totalCollectableItems.seeds -= unlockCost.seeds;
-            ph.totalCollectableItems.worms -= unlockCost.worms;
+            fc.UpdateBirbSlots();
+            transform.GetChild(0).GetComponent<Text>().text = "Please add " + slotCost.seeds + " seeds and " + slotCost.worms + " worms";
+        }
+    }
+
+    private void TryAddResourcesToSlot()
+    {
+        if (CollectableItem.HasEnoughResources(ph.totalCollectableItems, slotCost))
+        {
+            ph.SubtractResources(slotCost);
+            canAttractBirb = true;
             fc.UpdateBirbSlots();
             transform.GetChild(0).GetComponent<Text>().enabled = false;
         }
@@ -43,6 +56,13 @@ public class BirbSlot : MonoBehaviour {
             {
                 birbPopupModal.GetComponent<BirbPopup>().PopulatePopup(this);
                 birbPopupModal.SetActive(true);
+            }
+            else
+            {
+                if (!canAttractBirb)
+                {
+                    TryAddResourcesToSlot();
+                }
             }
         }
         else
@@ -58,48 +78,53 @@ public class BirbSlot : MonoBehaviour {
 
         GameObject birbObject = Instantiate(birbPrefab, this.transform, false);
         slotBirb = birbObject.GetComponent<Birb>();
-        slotBirb.CreateRandomBirb(fc.cd);
+        slotBirb.CreateRandomBirb(fc.cd, true, null, firstBirb);
+        firstBirb = false;
 
         //fix this, add stuff here
 
         return true;
     }
 
+    //adding a birb means deleting this one, and making it open again to add more seeds
     public void AddBirbToCollection()
     {
+        transform.GetChild(0).GetComponent<Text>().text = "Please add " + slotCost.seeds + " seeds and " + slotCost.worms + " worms";
+        transform.GetChild(0).GetComponent<Text>().enabled = true;
+        canAttractBirb = false;
         ph.AddBirbToAviary(slotBirb);
         slotBirb = null;
     }
 
-    //Check for amount of items being added/subtracted elsewhere making sure it can do the subtraction
-    public void AddItems(CollectableItem item)
-    {
-        slotItems = CollectableItem.Add(slotItems, item);
-        if (slotItems.HasItems())
-        {
-            canAttractBirb = true;
-        }
-        else
-        {
-            canAttractBirb = false;
-        }
-    }
+    ////Check for amount of items being added/subtracted elsewhere making sure it can do the subtraction
+    //public void AddItems(CollectableItem item)
+    //{
+    //    slotItems = CollectableItem.Add(slotItems, item);
+    //    if (slotItems.HasItems())
+    //    {
+    //        canAttractBirb = true;
+    //    }
+    //    else
+    //    {
+    //        canAttractBirb = false;
+    //    }
+    //}
 
-    public void RemoveItems(CollectableItem item)
-    {
-        if (CollectableItem.HasEnoughResources(slotItems, item))
-        {
-            slotItems = CollectableItem.Subtract(slotItems, item);
-        }
-        if (slotItems.HasItems())
-        {
-            canAttractBirb = true;
-        }
-        else
-        {
-            canAttractBirb = false;
-        }
-    }
+    //public void RemoveItems(CollectableItem item)
+    //{
+    //    if (CollectableItem.HasEnoughResources(slotItems, item))
+    //    {
+    //        slotItems = CollectableItem.Subtract(slotItems, item);
+    //    }
+    //    if (slotItems.HasItems())
+    //    {
+    //        canAttractBirb = true;
+    //    }
+    //    else
+    //    {
+    //        canAttractBirb = false;
+    //    }
+    //}
 
     public void DestroyBirb()
     {

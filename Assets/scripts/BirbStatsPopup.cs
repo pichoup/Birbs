@@ -28,6 +28,14 @@ public class BirbStatsPopup : MonoBehaviour {
         SetStats();
     }
 
+    public void PopulatePopup(Birb birb)
+    {
+        displayBirb.SetBirbStats(birb);
+
+        feedBirbButton.SetActive(!displayBirb.isWildBirb);
+        playBirbButton.SetActive(!displayBirb.isWildBirb);
+    }
+
     public void BackButton()
     {
         gameObject.SetActive(false);
